@@ -1,4 +1,4 @@
-//self//
+
 
 
 #include<stdio.h>
