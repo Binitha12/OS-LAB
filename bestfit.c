@@ -1,97 +1,63 @@
-#include<stdio.h>
+#include<stdio.h> //verified
 
 int main()
 {
-int i,j,blocknos,blocksize[10],processnos,processsize[10];
-int t,flag,leastsize,leastindex;
-printf("Enter the no of memory blocks");
-scanf("%d",&blocknos);
 
-printf("Enter the size of each block in order");
-for(i=0;i<blocknos;i++)
+    int m,n;
+    int flag,t,leastindex,leastsize;
+    
+    printf("Enter the no of blocks");
+    scanf("%d",&m);
+    int blocks[m];
+    printf("Enter the sizes of each block");
+    for(int i=0;i<m;i++)
+    {
+        scanf("%d",&blocks[i]);
+        
+
+    } 
+    printf("Enter the no of processes");
+    scanf("%d",&n);
+   int  process[n],allocation[n];
+    printf("Enter the size of each processes");
+    for(int i=0;i<n;i++)
+    {
+    scanf("%d",&process[i]);
+    allocation[i]=-1;
+}
+for(int i=0;i<n;i++)
 {
-scanf("%d",&blocksize[i]);
-}
-printf("Enter the no of process");
-scanf("%d",&processnos);
+   flag=0;
+    for(int j=0;j<m;j++)
+    {
+        
+        if(process[i]<=blocks[j] )
+        {
+          
+          if(flag==0) 
+          {
+            leastsize=blocks[j];
+            leastindex=j;
+            flag++;
+          } 
+          else if(blocks[j]<=leastsize)
+          {
+            leastsize=blocks[j];
+            leastindex=j; 
+          }
 
-printf("Enter the size of each process");
-for(i=0;i<processnos;i++)
-{
-scanf("%d",&processsize[i]);
-}
-printf("Blockno.\tBlocksize\n");
-for(i=0;i<blocknos;i++)
-{
-printf("%d\t\t%d",i+1,blocksize[i]);
-printf("\n");
-}
-printf("Processno.\tProcessSize\n");
-for(i=0;i<processnos;i++)
-{
-printf("%d\t\t%d",i+1,processsize[i]);
-printf("\n");
-}
-printf("BEST FIT MEMORY ALLOCATION\n");
+        } 
+    }
 
-printf("Processno\tAllocated blockno\tAllocated blocksize\tFragment left\n");
-i=0;
-while(i<processnos)
-{
-       flag=0;
-       for(j=0;j<blocknos;j++)
-       {
-            if(processsize[i]<=blocksize[j])
-             {
-                  if(flag==0)
-                   {
-                      leastsize=blocksize[j];
-                      leastindex=j;
-                      flag++;
-                   }
+t=blocks[leastindex];
+blocks[leastindex]=blocks[leastindex]-process[i];
+printf("%d %d %d %d\n",i+1,process[i],leastindex+1,t);
+ 
 
-                  else if(blocksize[j]<leastsize)
-                   {
-                      leastsize=blocksize[j];
-                      leastindex=j;
-                   }
-            }
-      }
-t=blocksize[leastindex];
-blocksize[leastindex]=blocksize[leastindex]-processsize[i];
-printf("%d\t\t\t%d\t\t\t%d\t\t\t%d\n",i+1,leastindex+1,processsize[i],blocksize[leastindex]);
-i++;
-}
+
 }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

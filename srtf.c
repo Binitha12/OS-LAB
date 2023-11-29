@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include<stdio.h> //not verified
 
 typedef struct process{
     int pid;
@@ -7,12 +7,13 @@ typedef struct process{
     int wt;
     int ct;
     int tat;
+    int rmtime;
 }process;
 
 int main()
 {
     
-    int n,ttat,twt;
+    int n,ttat=0,twt=0,shortest;
     float avwt,avtat;
     printf("Enter the no of processes\n");
     scanf("%d",&n);
@@ -24,6 +25,7 @@ int main()
         p[i].pid=i;
         printf("p[%d]",i);
         scanf("%d  %d",&p[i].at,&p[i].bt);
+        p[i].rmtime=p[i].bt;
         printf("\n");
 
     }
@@ -40,34 +42,45 @@ int main()
             }
         }
     }
-
-    printf("Process ID    Arrival Time   Burst Time \n");
+int time=0;
+int completed=0;
+while(completed<n)
+{
+ shortest=-1;
+ for(int i=0;i<n;i++)
+ {
+    if(p[i].at<=time && p[i].rmtime>0)
     {
-        for(int i=0;i<n;i++)
-        {
-            printf("%d         %d         %d \n",p[i].pid,p[i].at,p[i].bt);
-        }
+        if(shortest=-1|| p[i].rmtime<p[shortest].rmtime)
+        shortest=i;
 
     }
+ }
+ if(shortest==-1)
+ {
+    time++;
+    continue;
+ }
+ p[shortest].rmtime--;
+ time++;
+ if(p[shortest].rmtime==0)
+ {
+    completed++;
+    p[shortest].tat=time-p[shortest].at;
+    p[shortest].wt=p[shortest].tat-p[shortest].bt;
+    ttat=ttat+p[shortest].tat;
+ twt=twt+p[shortest].wt;
+ }
 
 
-    p[0].wt=0;
-    p[0].ct=p[0].bt + p[0].at;
-    p[0].tat=p[0].bt+p[0].wt;
-    ttat=p[0].tat;
-    twt=p[0].wt;
 
-
-
-for(int i=1;i<n;i++)
-{
-    p[i].wt=p[i-1].ct-p[i].at;
-    p[i].tat=p[i].bt+p[i].wt;
- p[i].ct=p[i].tat+p[i].at;
- ttat=ttat+p[i].tat;
- twt=twt+p[i].wt;
 
 }
+
+
+ 
+
+
 avtat=(float)ttat/(float)n;
 avwt=(float)twt/(float)n;
 printf("Process ID   Arrival Time  Burst Time   CT     TAT     WT\n");
@@ -82,11 +95,5 @@ printf("Total wt is %d\n",twt);
 printf("Total tat is %d\n",ttat);
 printf("Average wt is %f\n",avwt);
 printf("Average tat is %f\n",avtat);
-
-
-
-
-
-
 
 }
